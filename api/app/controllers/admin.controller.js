@@ -79,7 +79,6 @@ exports.updateIntro = async (req, res) => {
 exports.getAvatar = async (req, res) => {
   try {
     const data = await Admin.findOne();
-    console.log(data.avatar);
     res.status(200).send({ code: 1, avatar: data.avatar });
   } catch (error) {
     res.status(400).send({ code: 0 });
@@ -151,7 +150,6 @@ exports.addWork = async (req, res) => {
   try {
     const data = await Admin.findOne();
     data.works = [...data.works, work];
-    console.log(data.works);
     await data.save();
     res.status(200).send({ code: 1 });
   } catch (error) {
