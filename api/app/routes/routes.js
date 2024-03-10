@@ -17,7 +17,17 @@ module.exports = (app) => {
 
   router.put("/intro", admin.updateIntro);
 
+  router.get("/avatar", admin.getAvatar);
+
   router.post("/uploadAvatar", upload.single("avatar"), admin.uploadAvatar);
+
+  router.get("/background", admin.getBackground);
+
+  router.post(
+    "/uploadBackground",
+    upload.single("background"),
+    admin.uploadBackground
+  );
 
   router.post("/uploadCover", upload.single("cover"), admin.uploadCover);
 
@@ -25,12 +35,6 @@ module.exports = (app) => {
     "/uploadResource",
     upload.single("resource"),
     admin.uploadResource
-  );
-
-  router.post(
-    "/uploadBackground",
-    upload.single("background"),
-    admin.uploadAvatar
   );
 
   router.get("/works", admin.works);

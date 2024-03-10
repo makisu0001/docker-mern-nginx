@@ -76,11 +76,42 @@ exports.updateIntro = async (req, res) => {
   }
 };
 
+exports.getAvatar = async (req, res) => {
+  try {
+    const data = await Admin.findOne();
+    console.log(data.avatar);
+    res.status(200).send({ code: 1, avatar: data.avatar });
+  } catch (error) {
+    res.status(400).send({ code: 0 });
+  }
+};
+
 exports.uploadAvatar = async (req, res) => {
   const filename = req.file?.filename;
   try {
     const data = await Admin.findOne();
     data.avatar = filename;
+    await data.save();
+    res.status(200).send({ code: 1, filename: req.file?.filename });
+  } catch (error) {
+    res.status(400).send({ code: 0 });
+  }
+};
+
+exports.getBackground = async (req, res) => {
+  try {
+    const data = await Admin.findOne();
+    res.status(200).send({ code: 1, background: data.background });
+  } catch (error) {
+    res.status(400).send({ code: 0 });
+  }
+};
+
+exports.uploadBackground = async (req, res) => {
+  const filename = req.file?.filename;
+  try {
+    const data = await Admin.findOne();
+    data.background = filename;
     await data.save();
     res.status(200).send({ code: 1, filename: req.file?.filename });
   } catch (error) {
@@ -101,18 +132,6 @@ exports.uploadResource = async (req, res) => {
   const filename = req.file?.filename;
   try {
     res.status(200).send({ code: 1, filename });
-  } catch (error) {
-    res.status(400).send({ code: 0 });
-  }
-};
-
-exports.uploadBackground = async (req, res) => {
-  const filename = req.file?.filename;
-  try {
-    const data = await Admin.findOne();
-    data.avatar = filename;
-    await data.save();
-    res.status(200).send({ code: 1, filename: req.file?.filename });
   } catch (error) {
     res.status(400).send({ code: 0 });
   }
