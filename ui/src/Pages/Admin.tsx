@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { KeyboardEvent, MouseEvent, useRef, useState } from "react";
 import http from "../http";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +7,9 @@ function Admin() {
   const accountEl = useRef<HTMLInputElement>(null);
   const passwordEl = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const handleLogin = async () => {
+  const handleLogin = async (e?: KeyboardEvent | MouseEvent) => {
+    if ((e as KeyboardEvent)?.code && (e as KeyboardEvent)?.code !== "Enter")
+      return;
     const account = accountEl.current?.value;
     const password = passwordEl.current?.value;
     try {
@@ -15,8 +17,10 @@ function Admin() {
         account,
         password,
       });
-      if (res?.data?.code === 1) navigate("/dashboard/intro");
-      else throw new Error("login failed");
+      if (res?.data?.code === 1) {
+        localStorage.setItem("jwt", res.data.token);
+        navigate("/dashboard/intro");
+      } else throw new Error("login failed");
     } catch (err) {
       if ((err as Error).message === "login failed")
         setErrorMsg("账号或密码错误");

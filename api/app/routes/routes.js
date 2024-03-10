@@ -6,10 +6,10 @@ module.exports = (app) => {
   const upload = require("../utils/upload.js");
 
   // Create a new Tutorial
-  router.post("/", admin.create);
+  // router.post("/", admin.create);
 
   // Retrieve all Tutorials
-  router.get("/", admin.findAll);
+  // router.get("/", admin.findAll);
 
   router.post("/login", admin.login);
 
@@ -44,19 +44,19 @@ module.exports = (app) => {
   router.post("/removeWork", admin.removeWork);
 
   // Retrieve all published Tutorials
-  router.get("/published", admin.findAllPublished);
+  // router.get("/published", admin.findAllPublished);
 
-  // Retrieve a single Tutorial with id
-  router.get("/:id", admin.findOne);
+  // // Retrieve a single Tutorial with id
+  // router.get("/:id", admin.findOne);
 
-  // Update a Tutorial with id
-  router.put("/:id", admin.update);
+  // // Update a Tutorial with id
+  // router.put("/:id", admin.update);
 
-  // Delete a Tutorial with id
-  router.delete("/:id", admin.delete);
+  // // Delete a Tutorial with id
+  // router.delete("/:id", admin.delete);
 
-  // Create a new Tutorial
-  router.delete("/", admin.deleteAll);
+  // // Create a new Tutorial
+  // router.delete("/", admin.deleteAll);
 
   app.use("/api", router);
 };

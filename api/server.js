@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -13,11 +14,24 @@ app.use(cors(corsOptions));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// parse requests of content-type - application/json
 app.use(express.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+const verify = (req, res, next) => {
+  if (req.path.includes("/login")) {
+    next();
+  } else {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+    jwt.verify(token, "makisu", { algorithms: ["HS256"] }, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: "未授权访问" });
+      }
+      next();
+    });
+  }
+};
+app.use(verify);
 
 const db = require("./app/models");
 

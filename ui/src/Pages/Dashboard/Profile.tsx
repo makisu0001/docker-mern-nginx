@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import http from "../../http";
 
 const Profile = () => {
@@ -36,6 +36,14 @@ const Profile = () => {
       // console.log(res);
     }
   };
+  useEffect(() => {
+    const getAvatar = async () => {
+      try {
+        await http.get("/avatar");
+      } catch (err) {}
+    };
+    getAvatar();
+  }, []);
   return (
     <div className="h-full px-12 py-6 overflow-auto">
       <div className="mt-12 text-left">
